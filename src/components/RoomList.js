@@ -8,54 +8,50 @@ export class RoomList extends Component {
         rooms: [],
     };
 
-  this.roomsRef = this.props.firebase.database().ref('rooms');
-  this.handleChange = this.handleChange.bind(this);
-  this.createRoom = this.createRoom.bind(this);
-
+    this.roomsRef = this.props.firebase.database().ref('rooms');
+    this.handleChange = this.handleChange.bind(this);
+    this.createRoom = this.createRoom.bind(this);
   }
 
-    handleChange(e){
-      this.setState({ name: e.target.value })
-    }
+  handleChange(e){
+    this.setState({ name: e.target.value })
+  }
 
-    componentDidMount() {
-      this.roomsRef.on('child_added', snapshot => {
-        const room = snapshot.val();
-        room.key = snapshot.key;
-        this.setState({ rooms: this.state.rooms.concat( room ) })
-      });
-    }
+  componentDidMount() {
+    this.roomsRef.on('child_added', snapshot => {
+      const room = snapshot.val();
+      room.key = snapshot.key;
+      this.setState({ rooms: this.state.rooms.concat( room ) })
+    });
+  }
 
-    selectRoom(room) {
-      this.props.activeRoom(room);
-    }
+  selectRoom(room) {
+    this.props.activeRoom(room);
+  }
 
-
-    createRoom(e) {
+  createRoom(e) {
     e.preventDefault();
     this.roomsRef.push({ name: this.state.name });
     this.setState({name: ""})
-    }
+  }
 
-    render(){
-      const roomList = this.state.rooms.map((room) =>
+  render(){
+    const roomList = this.state.rooms.map((room) =>
       <li key={room.key} onClick={(e) => this.selectRoom(room, e)}>{room.name}</li>);
       const newRoom = (
-      <form onSubmit={this.createRoom}>
-        <input type="text" value={this.state.name} onChange={this.handleChange} placeholder="Create new chat room"  />
-        <input type="submit" value="Start Chat"/>
-      </form>
-    );
-      return(
-        <section>
-          <div>{newRoom}</div>
-          <ul>{roomList}</ul>
-        </section>
-
+        <form onSubmit={this.createRoom}>
+          <input type="text" value={this.state.name} onChange={this.handleChange} placeholder="Create new chat room"  />
+          <input type="submit" value="Start Chat"/>
+        </form>
       );
-      //second checkpoint create room
-
-
+    return(
+      <section>
+        <div>{newRoom}</div>
+        <ul>{roomList}</ul>
+        </section>
+      );
+      
     }
 }
+
 export default RoomList;

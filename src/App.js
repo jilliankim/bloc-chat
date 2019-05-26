@@ -4,7 +4,6 @@ import MessageList from './components/MessageList';
 import './App.css';
 import * as firebase from 'firebase';
 
-
 var firebaseConfig = {
   apiKey: "AIzaSyBk0kiiFRbwyPcKKY6CwHvKAV0wOg2M0l4",
   authDomain: "bloc-chat-7c769.firebaseapp.com",
@@ -13,9 +12,9 @@ var firebaseConfig = {
   storageBucket: "bloc-chat-7c769.appspot.com",
   messagingSenderId: "596692860351",
   appId: "1:596692860351:web:b25a663f14189c8a"
-  };
+};
 
-  firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
 class App extends Component {
   constructor(props){
